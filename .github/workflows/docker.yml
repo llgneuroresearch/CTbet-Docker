@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - 
-        name: Check disk space
-        run: df . -h
-      - 
         name: Free disk space
         run: |
             sudo docker rmi $(docker image ls -aq) >/dev/null 2>&1 || true
@@ -41,12 +38,6 @@ jobs:
             sudo apt-get autoremove -y >/dev/null 2>&1
             sudo apt-get autoclean -y >/dev/null 2>&1
             echo "some packages purged"
-      - 
-        name: Check disk space
-        run: |
-            sudo dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -nr | head
-            df . -h
-            sudo du /usr/ -hx -d 4 --threshold=1G | sort -hr | head
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -59,6 +50,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - 
+        name: Checkout github repo (+ download lfs dependencies)
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - 
+        name: Checkout LFS objects
+        run: git lfs checkout
       -
         name: Build and push
         uses: docker/build-push-action@v6
