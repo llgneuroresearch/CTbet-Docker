@@ -65,8 +65,8 @@ jobs:
         with:
           lfs: true
       - 
-        name: Checkout LFS objects
-        run: git lfs checkout
+        name: Pull LFS objects
+        run: git lfs Pull
       -
         name: Build and push
         uses: docker/build-push-action@v6
