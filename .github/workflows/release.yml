@@ -47,6 +47,14 @@ jobs:
             sudo dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -nr | head
             df . -h
             sudo du /usr/ -hx -d 4 --threshold=1G | sort -hr | head
+      - 
+        name: Checkout github repo (+ download lfs dependencies)
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - 
+        name: Pull LFS objects
+        run: git lfs Pull
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -59,17 +67,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - 
-        name: Checkout github repo (+ download lfs dependencies)
-        uses: actions/checkout@v2
-        with:
-          lfs: true
-      - 
-        name: Pull LFS objects
-        run: git lfs Pull
       -
         name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ctbet:${{ github.ref_name }}
+          context: .
