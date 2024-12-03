@@ -41,7 +41,7 @@ The input consists into a directory containing all your CT scans in Nifti format
 
 - Output
 
-Create an output folder where the CT scans without the skull will be saved.
+Create an output folder where the brain masks will be saved.
 
 - Command line
 
