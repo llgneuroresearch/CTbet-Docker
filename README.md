@@ -1,4 +1,9 @@
 # CTbet-Docker
+[![Documentation Status](https://github.com/llgneuroresearch/CTbet-Docker/actions/workflows/docker.yml/badge.svg
+)](https://hub.docker.com/r/avnirlab/ctbet/tags)
+![GitHub Release](https://img.shields.io/github/v/release/llgneuroresearch/CTbet-Docker)
+
+
 Docker container for CT brain extraction based on nnU-Net, a self-configuring method for medical image segmentation.
 
 The Dockerfile sets up an environment for running NNUNETV2 with PyTorch and CUDA support. It includes the necessary dependencies and configurations for NNUNETV2.
